@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
+    <string name="Send">Send Message</string>
+    <string name="Power">Display Power</string>
     <string name="ApplicationName">AndroidApp</string>
 </resources>

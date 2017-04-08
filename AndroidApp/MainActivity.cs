@@ -8,7 +8,7 @@ using Android.OS;
 
 namespace AndroidApp
 {
-    [Activity(Label = "AndroidApp", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "AndroidApp", MainLauncher = false, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         int count = 1;
@@ -22,9 +22,8 @@ namespace AndroidApp
 
             // Get our button from the layout resource,
             // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
-
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+            Button button = FindViewById<Button>(Resource.Id.buttonSend);
+            //button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
         }
     }
 }
