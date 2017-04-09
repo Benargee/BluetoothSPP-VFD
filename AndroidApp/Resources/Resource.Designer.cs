@@ -73,7 +73,10 @@ namespace AndroidApp
 			public const int listView1 = 2131034113;
 			
 			// aapt resource value: 0x7f050005
-			public const int simple_list_item_1 = 2131034117;
+			public const int seekBar1 = 2131034117;
+			
+			// aapt resource value: 0x7f050006
+			public const int simple_list_item_1 = 2131034118;
 			
 			// aapt resource value: 0x7f050002
 			public const int switchPower = 2131034114;

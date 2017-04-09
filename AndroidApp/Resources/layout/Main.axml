@@ -11,7 +11,10 @@
         android:textAlignment="viewEnd"
         android:textAllCaps="false"
         android:textOff="Off"
-        android:textOn="On" />
+        android:textOn="On"
+        android:enabled="true"
+        android:buttonTint="#00000000"
+        android:checked="false" />
     <EditText
         android:inputType="textMultiLine"
         android:layout_width="match_parent"
@@ -22,4 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Send" />
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar1" />
 </LinearLayout>

@@ -94,7 +94,7 @@ namespace AndroidApp
             Toast.MakeText((this), address, ToastLength.Long).Show();
 
             Intent i = new Intent(this, typeof(MainActivity));
-
+            i.PutExtra(EXTRA_ADDRESS, address);
             StartActivity(i);
 
             //throw new NotImplementedException();
