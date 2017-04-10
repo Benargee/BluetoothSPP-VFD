@@ -15,18 +15,23 @@
         android:enabled="true"
         android:buttonTint="#00000000"
         android:checked="false" />
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar1" />
     <EditText
         android:inputType="textMultiLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText1" />
+        android:id="@+id/textMessage" />
     <Button
         android:id="@+id/buttonSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Send" />
-    <SeekBar
+    <Button
+        android:text="Clear Screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar1" />
+        android:id="@+id/button1" />
 </LinearLayout>

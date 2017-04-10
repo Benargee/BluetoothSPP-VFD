@@ -25,6 +25,7 @@ namespace AndroidApp
         public static ProgressDialog progress;
         public static BluetoothAdapter myBluetooth = null;//not sure if public static is best use case
         public static BluetoothSocket btSocket = null;
+        private EditText textMessage;
         public static bool isBtConnected = false;
         //SPP UUID
         static UUID sppUUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -40,7 +41,9 @@ namespace AndroidApp
 
             // Get our button from the layout resource,
             // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.buttonSend);
+            Button buttonSend = FindViewById<Button>(Resource.Id.buttonSend);
+            buttonSend.Click += ButtonSend_Click;
+            textMessage = FindViewById<EditText>(Resource.Id.textMessage);
             //button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
 
             Switch displaySwitch = FindViewById<Switch>(Resource.Id.switchPower);
@@ -57,6 +60,14 @@ namespace AndroidApp
             
 
 
+        }
+
+        private void ButtonSend_Click(object sender, EventArgs e)
+        {
+            string str;
+            str = textMessage.Text;
+            sendData(str, false);
+            //throw new NotImplementedException();
         }
 
         private void DisplaySwitch_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -76,14 +87,20 @@ namespace AndroidApp
 
         private void sendData (string data, bool command)
         {
+            string cmd;
             if (command)
             {
-                data = "1" + data;
+                cmd = "1";
             }
             else
             {
-                data = "0" + data;
+                cmd = "0";
             }
+
+            string stx = "\x02";//Start of Text
+            string nul = "\0";//Null
+            data = stx + cmd + data + nul;
+
             byte[] buff = Encoding.ASCII.GetBytes(data);
             btSocket.OutputStream.Write(buff, 0, buff.Length);
         }
