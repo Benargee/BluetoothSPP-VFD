@@ -17,8 +17,6 @@ namespace AndroidApp
     [Activity(Label = "AndroidApp", MainLauncher = false, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        int count = 1;//X
-
         public static Context mContext;
         public static Activity mActivity;
         public static string address = null;
@@ -29,8 +27,7 @@ namespace AndroidApp
         public static bool isBtConnected = false;
         //SPP UUID
         static UUID sppUUID = UUID.FromString("00001101-0000-1000-8000-00805F9B34FB");
-
-
+        
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -39,12 +36,10 @@ namespace AndroidApp
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
-            // Get our button from the layout resource,
-            // and attach an event to it
             Button buttonSend = FindViewById<Button>(Resource.Id.buttonSend);
             buttonSend.Click += ButtonSend_Click;
+
             textMessage = FindViewById<EditText>(Resource.Id.textMessage);
-            //button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
 
             Switch displaySwitch = FindViewById<Switch>(Resource.Id.switchPower);
             displaySwitch.CheckedChange += DisplaySwitch_CheckedChange;
@@ -52,14 +47,8 @@ namespace AndroidApp
             mContext = this;
             mActivity = this;
             Java.Lang.Object[] jObject = {mContext};
-            //jObject[] = mContext;
             ConnectBT cBT = new ConnectBT();
             cBT.Execute(jObject);
-            
-
-            
-
-
         }
 
         private void ButtonSend_Click(object sender, EventArgs e)
@@ -67,7 +56,6 @@ namespace AndroidApp
             string str;
             str = textMessage.Text;
             sendData(str, false);
-            //throw new NotImplementedException();
         }
 
         private void DisplaySwitch_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -75,13 +63,12 @@ namespace AndroidApp
             string str;
             if (e.IsChecked)
             {
-                str = "Chk";
+                str = "D1";
             }
             else
             {
-                str = "Nchk";
+                str = "D0";
             }
-            
             sendData(str, true);
         }
 
@@ -117,16 +104,12 @@ namespace AndroidApp
 
             protected override void OnPreExecute()
             {
-                /*AndroidApp.MainActivity.*/
-                /*ProgressDialog*/ progress = ProgressDialog.Show(MainActivity.mContext, "Connecting...", "Please wait!!!");
-                //var progressDialog = ProgressDialog.Show(this, "Please wait...", "Checking account info...", true);
+                progress = ProgressDialog.Show(MainActivity.mContext, "Connecting...", "Please wait!!!");
                 //base.OnPreExecute();
             }
             protected override Java.Lang.Object DoInBackground(params Java.Lang.Object[] @params)
             {
-                //Console.WriteLine(@params[0]);
                 Java.Lang.Object[] qparams = @params;
-
                 try
                 {
                     if (btSocket == null|| !isBtConnected)
@@ -143,14 +126,13 @@ namespace AndroidApp
                 {
                     ConnectSuccess = false;//if the try failed, you can check the exception here
                 }
-                //throw new NotImplementedException();
                 return qparams;
             }
             protected override void OnPostExecute(Java.Lang.Object result)
             {
                 if (!ConnectSuccess)
                 {
-                    MainActivity.msg("Connection Failed.Is it a SPP Bluetooth ? Try again.");
+                    MainActivity.msg("Connection Failed.\n Is it a SPP Bluetooth? Try again.");
                     mActivity.Finish();
                 }
                 else
