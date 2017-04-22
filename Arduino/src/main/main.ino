@@ -3,8 +3,9 @@ LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 
 char ch;
 int term = 1; //variable for storing string termination
-int command = 0;  //variable for storing command mode
+char command = '\0';  //variable for storing command mode
 int cursorPos = 0;
+int protoStage = 0;
   
 void setup()
 {
@@ -32,17 +33,8 @@ void loop()
           if (term == 1)
           {
             term = 0;
+            protoStage = 1;
             lcd.clear();
-          }
-          if(Serial.read() == 49)//"1"
-          {
-            //Serial.write("CMD\n");
-            digitalWrite(LED_BUILTIN, HIGH);
-          }
-          else
-          {
-            digitalWrite(LED_BUILTIN, LOW);
-            //Serial.write("MSG\n");
           }
         }
         break;
@@ -54,8 +46,37 @@ void loop()
         break;
         default:
         {
-          Serial.write(ch);
-          lcd.write(ch);
+          //Serial.write(ch);
+          //lcd.write(ch);
+          switch (protoStage)
+          {
+            case 0:
+            {
+              
+            }
+            break;
+            case 1:
+            {
+                command = ch;
+                protoStage = 2;
+            }
+            break;
+            case 2:
+            {
+              if(command == 'M')
+              {
+                Serial.write(ch);
+                lcd.write(ch);
+              }
+            }
+            break;
+            default:
+            {
+              
+            }
+          }
+          
+          
         }
         break;
       }

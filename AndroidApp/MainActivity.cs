@@ -39,6 +39,9 @@ namespace AndroidApp
             Button buttonSend = FindViewById<Button>(Resource.Id.buttonSend);
             buttonSend.Click += ButtonSend_Click;
 
+            Button buttonClear = FindViewById<Button>(Resource.Id.buttonClear);
+            buttonClear.Click += ButtonClear_Click;
+
             textMessage = FindViewById<EditText>(Resource.Id.textMessage);
 
             Switch displaySwitch = FindViewById<Switch>(Resource.Id.switchPower);
@@ -51,11 +54,16 @@ namespace AndroidApp
             cBT.Execute(jObject);
         }
 
+        private void ButtonClear_Click(object sender, EventArgs e)
+        {
+            sendData("C");
+        }
+
         private void ButtonSend_Click(object sender, EventArgs e)
         {
             string str;
-            str = textMessage.Text;
-            sendData(str, false);
+            str = "M" + textMessage.Text;
+            sendData(str);
         }
 
         private void DisplaySwitch_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -69,24 +77,14 @@ namespace AndroidApp
             {
                 str = "D0";
             }
-            sendData(str, true);
+            sendData(str);
         }
 
-        private void sendData (string data, bool command)
+        private void sendData (string data)
         {
-            string cmd;
-            if (command)
-            {
-                cmd = "1";
-            }
-            else
-            {
-                cmd = "0";
-            }
-
             string stx = "\x02";//Start of Text
             string nul = "\0";//Null
-            data = stx + cmd + data + nul;
+            data = stx + data + nul;
 
             byte[] buff = Encoding.ASCII.GetBytes(data);
             btSocket.OutputStream.Write(buff, 0, buff.Length);
